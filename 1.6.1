@@ -1,4 +1,4 @@
-// Программа "Бюджет" v 1.6.6.
+// Программа "Бюджет" v 1.6.7.
 // Автор - Zlatoust
 // Ближайшие планы: Расчёт премии, вынос неизменяемых функций в файл, текстовый интерфейс
 
@@ -59,9 +59,9 @@ int main()
 				double hours, grade, night; // Часы, ставка, ночные
 				cout << "Введите число часов, часовую ставку \n и кол-во ночных часов (0, если не было) через пробел:" << endl;
 				cin >> hours_tmp >> grade_tmp >> night_tmp;
-				hours = atoi(hours_tmp); // Преобразование из char в double
-				grade = atoi(grade_tmp);
-				night = atoi(night_tmp);
+				hours = atof(hours_tmp); // Преобразование из char в double
+				grade = atof(grade_tmp);
+				night = atof(night_tmp);
 				if(hours <= 0 || grade <= 0)
 				{ error("Недопустимое значение часов или ставки"); }
 				else // Начинаем рассчёты
