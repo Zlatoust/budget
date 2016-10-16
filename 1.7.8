@@ -65,7 +65,7 @@ int main()
 				hours = atof(hours_tmp); // Преобразование из char в double
 				grade = atof(grade_tmp);
 				night = atof(night_tmp);
-				if(hours <= 0 || grade <= 0)
+				if(hours <= 0 || grade <= 0 || hours < night)
 				{ error("Недопустимое значение часов или ставки"); }
 				else // Начинаем рассчёты
         			{ double doh = zp(hours, grade, night, doh); } // Вызов функции (цепи функций)
