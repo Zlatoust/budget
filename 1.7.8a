@@ -44,17 +44,22 @@ double zp(double hours, double grade, double night, double doh)
 	doh = rashod(doh); // Передаём результат след. функции
 }
 
+int menu()
+{
+	if (first_time) cout << "Запустить(1) или Остановить(0)?\n"; // Пользовательский "интерфейс"
+	else 		cout << "Повторить(1) или Остановить(0)?\n";
+	int c;
+	cin >> c;
+	first_time = false;
+	return c;
+}
+
 int main()
 {
-	for (int t = 0; cin; ++t) // Цикл для возврата в начало программы
-	{	
-		int c;
-		if (t==0)
-			cout << "Запустить(1) или Остановить(0)?\n"; // Пользовательский "интерфейс"
-		else
-			cout << "Повторить(1) или Остановить(0)?\n";
-		cin >> c;
-		switch (c)
+	bool first_time = true;
+	while (true)
+	{
+		switch (menu(first_time))
 		{
 			case 1:
 			{
@@ -66,9 +71,9 @@ int main()
 				grade = atof(grade_tmp);
 				night = atof(night_tmp);
 				if(hours <= 0 || grade <= 0 || hours < night)
-				{ error("Недопустимое значение часов или ставки"); }
+					error("Недопустимое значение часов или ставки"); 
 				else // Начинаем рассчёты
-        			{ double doh = zp(hours, grade, night, doh); } // Вызов функции (цепи функций)
+	        			double doh = zp(hours, grade, night, doh); // Вызов функции (цепи функций)
 				break;
 			}
 			default:
@@ -76,6 +81,6 @@ int main()
 				cout << "До свидания!\n";
 				return 0;
 			}
-		}
+	}
 	}
 }
