@@ -1,4 +1,4 @@
-// Программа "Бюджет" v 1.7.8.
+// Программа "Бюджет" v 1.7.8а
 // Авторы - Zlatoust, Hunterk95
 // Ближайшие планы: Расчёт премии, вынос неизменяемых функций в файл, текстовый интерфейс, графический интерфейс
 
@@ -41,7 +41,7 @@ double zp(double hours, double grade, double night, double doh)
 {
 	doh = (hours*grade+grade*nh*night)*nds;
 	cout << "Доход: " << doh << endl;
-	doh = rashod(doh); // Передаём результат след. функции
+	rashod(doh); // Передаём результат след. функции
 }
 
 int main()
