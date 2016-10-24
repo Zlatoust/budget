@@ -1,0 +1,86 @@
+// Программа "Бюджет" v 1.7.8.
+// Авторы - Zlatoust, Hunterk95
+// Ближайшие планы: Расчёт премии, вынос неизменяемых функций в файл, текстовый интерфейс, графический интерфейс
+
+#include <stdlib.h>
+#include <iostream>
+#include <vector>
+#define nds 0.87 // Подоходный налог
+#define nh 0.20  // Надбавка за ночные работы
+
+using namespace std;
+
+int error(string s) // Простой генератор ошибки (без перехватчика) для экономии места и времени
+{
+	cout << s << endl;
+	return 0;
+}
+
+double rashod (double doh) // Счётчик расходов с выводом промежуточных результатов
+{
+	vector<double> traty;  // Безразмерный контейнер
+	double tr;             // И его переменная
+	for (int i = 0; cin>>tr; ++i)
+        {
+			traty.push_back (tr); // Заносим данные в вектор
+			doh -= traty[i];      // Уменьшаем остаток
+			cout << "Расход: " << traty[i] << ". Остаток: " << doh<< "\n"; // Все промежуточные значения выводятся на экран
+			if (doh < 0)
+			{
+				error("Недостаточно средств");
+				return 0; // Сброс на начало
+            }
+            // Цикл не прервётся, пока остаток не уйдёт в минус
+            // или пользователь не психанёт.
+         }
+}
+
+// Расчёт чистой прибыли по отработанным часам за вычетом налога (13%)
+// и с учётом ночных работ (+20% от часовой ставки за каждый "ночной" час)
+double zp(double hours, double grade, double night, double doh)
+{
+	doh = (hours*grade+grade*nh*night)*nds;
+	cout << "Доход: " << doh << endl;
+	doh = rashod(doh); // Передаём результат след. функции
+}
+
+int menu()
+{
+	if (first_time) cout << "Запустить(1) или Остановить(0)?\n"; // Пользовательский "интерфейс"
+	else 		cout << "Повторить(1) или Остановить(0)?\n";
+	int c;
+	cin >> c;
+	first_time = false;
+	return c;
+}
+
+int main()
+{
+	bool first_time = true;
+	while (true)
+	{
+		switch (menu(first_time))
+		{
+			case 1:
+			{
+				char hours_tmp[50], grade_tmp[50], night_tmp[50]; //Временные переменные
+				double hours, grade, night; // Часы, ставка, ночные
+				cout << "Введите число часов, часовую ставку \n и кол-во ночных часов (0, если не было) через пробел:" << endl;
+				cin >> hours_tmp >> grade_tmp >> night_tmp;
+				hours = atof(hours_tmp); // Преобразование из char в double
+				grade = atof(grade_tmp);
+				night = atof(night_tmp);
+				if(hours <= 0 || grade <= 0 || hours < night)
+					error("Недопустимое значение часов или ставки"); 
+				else // Начинаем рассчёты
+	        			double doh = zp(hours, grade, night, doh); // Вызов функции (цепи функций)
+				break;
+			}
+			default:
+			{
+				cout << "До свидания!\n";
+				return 0;
+			}
+	}
+	}
+}
